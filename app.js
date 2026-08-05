@@ -1,0 +1,14 @@
+const express = require("express");
+const app = express();
+const requestId = require("./middleware/requestId");
+const logger = require("./middleware/logger");
+const timing = require("./middleware/timing");
+app.use(requestId);
+app.use(logger);
+app.use(timing);
+app.use(express.json());
+const postsRouter = require("./routes/posts");
+const usersRouter = require("./routes/users");
+app.use("/posts", postsRouter);
+app.use("/users", usersRouter);
+app.listen(4000, () => console.log("Server running on port 4000"));
